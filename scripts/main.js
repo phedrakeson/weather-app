@@ -1,3 +1,3 @@
-import ClientService from './modules/client-service.js';
+import WeatherService from './modules/weather.js';
 
-document.querySelector('.search').addEventListener('submit', ClientService.submit);
+const weather = new WeatherService('.search', '.search input');
