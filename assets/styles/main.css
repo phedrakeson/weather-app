@@ -62,3 +62,10 @@ body {
   outline: none;
   border: none;
 }
+
+.search button {
+  border: none;
+  outline: none;
+  padding: 10px;
+  cursor: pointer;
+}
