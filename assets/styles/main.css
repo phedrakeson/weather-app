@@ -6,8 +6,9 @@
 
 html {
   font-size: 62.5%;
-  font-family: sans-serif;
+  font-family: 'Poppins', sans-serif;
   color: #2e3131;
+  line-height: 1.2;
 }
 
 body {
@@ -50,10 +51,12 @@ body {
 
 .weather-data h1 {
   font-size: 4rem;
+  font-weight: 300;
 }
 
 .weather-data span {
   font-size: 8rem;
+  font-weight: 300;
 }
 
 .search {
