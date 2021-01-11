@@ -8,6 +8,7 @@ export default class WeatherService {
 
   init() {
     this.form.addEventListener('submit', this.getSearch);
+    this.getWeatherData('Brasília');
   }
 
   getSearch(event) {
@@ -19,12 +20,10 @@ export default class WeatherService {
     const encodedCity = encodeURI(city);
     const dadosResponse = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${encodedCity}&appid=${api_key}`);
     const dadosJSON = await dadosResponse.json();
-    console.log(dadosJSON);
     let { temp, humidity, temp_min } = dadosJSON.main;
     let cityName = dadosJSON.name;
     let iconCode = dadosJSON.weather[0].icon;
     let weatherIcon = `http://openweathermap.org/img/wn/${iconCode}@2x.png`
-    console.log(iconCode)
     temp = this.convertKelvinToCelsius(temp);
     temp_min = this.convertKelvinToCelsius(temp_min);
     document.querySelector('[data-city]').innerText = cityName;
