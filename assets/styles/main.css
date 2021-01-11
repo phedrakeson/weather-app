@@ -38,6 +38,11 @@ body {
   justify-content: space-between;
 }
 
+.weather-icon img {
+  max-width: 100%;
+  display: block;
+}
+
 .weather-data p {
   font-size: 2rem;
 }
