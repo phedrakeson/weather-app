@@ -4,7 +4,8 @@ export default class WeatherService {
     this.form = document.querySelector(form);
     this.input = document.querySelector(input);
     this.getSearch = this.getSearch.bind(this);
-    this.monthArray = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+    this.calendar = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+    this.setClock = this.setClock.bind(this);
   }
 
   init() {
@@ -31,11 +32,13 @@ export default class WeatherService {
   }
 
   setMonth(monthIndex) {
-    return this.month = this.monthArray[monthIndex];
+    return this.month = this.calendar[monthIndex];
   }
 
   setClock() {
-    document.querySelector('[data-time]').innerText = `${this.hour}:${this.minutes}, ${this.day} de ${this.month}, ${this.year}`;
+    setInterval(() => {
+      document.querySelector('[data-time]').innerText = `${this.hour}:${this.minutes}, ${this.day} de ${this.month}, ${this.year}`;
+    }, 1000);
   }
 
 
