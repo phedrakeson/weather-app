@@ -60,13 +60,15 @@ body {
 }
 
 .search {
+  max-width: 100%;
   margin-top: 150px;
   display: flex;
   justify-content: center;
 }
 
 .search input {
-  width: 300px;
+  width: 100%;
+  max-width: 350px;
   padding: 10px;
   outline: none;
   border: none;
@@ -79,4 +81,24 @@ body {
   cursor: pointer;
   background: #2e3131;
   color: #eeeeee;
+}
+
+@media (max-width: 500px) {
+  html {
+    font-size: 50%;
+  }
+
+  .search {
+    flex-direction: column;
+  }
+
+  .container {
+    padding: 30px;
+  }
+}
+
+@media (max-width: 350px) {
+  html {
+    font-size: 40%;
+  }
 }
