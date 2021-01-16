@@ -19,6 +19,7 @@ O projeto ainda está em desenvolvimento e as próximas atualizações serão vo
 - [ ] Implementar mudanças de estilo com base no horário (manhã, tarde e noite).
 - [ ] Melhorar o sistema de busca, implementando sugestões de cidades.
 - [ ] Adicionar um mini player de música, requisitando outra API.
+- [ ] Refatoração total dos scripts, deixá-los mais limpos.
 
 
 ## 📫 Contribuindo para Slide
@@ -34,5 +35,3 @@ Como alternativa, consulte a documentação do GitHub em [como criar uma solicit
 
 
 Esse projeto está sob licença. Veja o arquivo [LICENÇA](LICENSE.md) para mais detalhes.
-
-[⬆ Voltar ao topo](#Weather)<br>
