@@ -6,12 +6,14 @@ export default class WeatherService {
     this.getSearch = this.getSearch.bind(this);
     this.calendar = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
     this.setClock = this.setClock.bind(this);
+    this.getTimeAndDate = this.getTimeAndDate.bind(this);
   }
 
   init() {
     this.form.addEventListener('submit', this.getSearch);
     this.getWeatherData('Brasília');
-    this.getTimeAndDate()
+    this.getTimeAndDate();
+    setInterval(this.getTimeAndDate, 5000);
   }
 
   getSearch(event) {
