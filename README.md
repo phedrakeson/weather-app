@@ -22,8 +22,8 @@ O projeto ainda está em desenvolvimento e as próximas atualizações serão vo
 - [ ] Refatoração total dos scripts, deixá-los mais limpos.
 
 
-## 📫 Contribuindo para Slide
-Para contribuir com Slide, siga estas etapas:
+## 📫 Contribuindo para o Weather App
+Para contribuir com Weather App, siga estas etapas:
 
 1. Bifurque este repositório.
 2. Crie um branch: `git checkout -b <nome_branch>`.
