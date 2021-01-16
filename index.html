@@ -10,22 +10,34 @@
 </head>
 <body>
   <section class="container">
-    <div class="weather">
-      <div class="weather-data">
-        <p data-time></p>
-        <h1 data-city></h1>
-        <span data-temp></span>
-      </div>
-      <div class="weather-icon">
-        <img src="" alt="icon">
+    <div class="app-header">
+      <form class="search" action="">
+        <input placeholder="Digite o nome de sua cidade"type="text">
+        <button type="submit">Buscar</button>
+      </form>
+      <div class="city">
+        <h1 data-city></h1><h2 data-state></h2>
       </div>
     </div>
-    <form class="search" action="">
-      <input placeholder="Digite o nome de sua cidade"type="text">
-      <button type="submit">Buscar</button>
-    </form>
+
+    <div class="app-content">
+      <div class="container-weather-status">
+        <span data-temp></span>
+        <ul class="weather-status">
+          <li data-min_temp><img src="../assets/img/temperature.svg"><p></p></li>
+          <li data-humidity><img src="../assets/img/humidity.svg" alt=""><p></p></li>
+          <li data-wind><img src="../assets/img/wind.svg" alt=""><p></p></li>
+        </ul>
+      </div>
+      <div class="weather-icon">
+        <img  data-weather src="" alt="icon">
+      </div>
+    </div>
+    <div class="app-footer">
+      <p data-time></p>
+    </div>
   </section>
 
-  <script type="module" src="scripts/main.js"></script>
+  <script defer type="module" src="scripts/main.js"></script>
 </body>
 </html>

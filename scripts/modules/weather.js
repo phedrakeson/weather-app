@@ -36,9 +36,11 @@ export default class WeatherService {
   }
 
   setClock() {
-    setInterval(() => {
+    if(this.minutes < 10) {
+      document.querySelector('[data-time]').innerText = `${this.hour}:0${this.minutes}, ${this.day} de ${this.month}, ${this.year}`;
+    } else {
       document.querySelector('[data-time]').innerText = `${this.hour}:${this.minutes}, ${this.day} de ${this.month}, ${this.year}`;
-    }, 1000);
+    }
   }
 
 
@@ -46,6 +48,8 @@ export default class WeatherService {
     const encodedCity = encodeURI(city);
     const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${encodedCity}&appid=${api_key}`);
     const resJSON = await res.json();
+    let wind = (resJSON.wind.speed * 3.6).toFixed(2);
+    let country = resJSON.sys.country;
     let { temp, humidity, temp_min } = resJSON.main;
     let cityName = resJSON.name;
     let iconCode = resJSON.weather[0].icon;
@@ -53,8 +57,15 @@ export default class WeatherService {
     temp = this.convertKelvinToCelsius(temp);
     temp_min = this.convertKelvinToCelsius(temp_min);
     document.querySelector('[data-city]').innerText = cityName;
-    document.querySelector('[data-temp]').innerText = `${temp}°C`;
-    document.querySelector('.weather-icon img').src = weatherIcon;
+    document.querySelector('[data-state]').innerText = country;
+
+    document.querySelector('[data-temp]').innerText = `${temp}°`;
+    document.querySelector('[data-weather]').src = weatherIcon;
+    
+    document.querySelector('[data-humidity] p').innerText = `${humidity}%`;
+    document.querySelector('[data-wind] p').innerText = `${wind} km/h`;
+    document.querySelector('[data-min_temp] p').innerText = `${temp_min}°`;
+
   }
 
   convertKelvinToCelsius(value) {

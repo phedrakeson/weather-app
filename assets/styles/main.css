@@ -2,6 +2,8 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  text-decoration: none;
+  list-style: none;
 }
 
 html {
@@ -17,27 +19,70 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(to top, #a18cd1 0%, #fbc2eb 100%);
+  background: url('../img/bg.jpg') no-repeat center;
+  background-size: cover;
 }
 
 .container {
-  width: 80vw;
-  height: 80vh;
-  background: rgba(236, 240, 241, 0.25);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  min-width: 80vw;
+  min-height: 80vh;
+  background: rgba(232, 232, 232, 0.3);
+  box-shadow: 6px 6px 20px rgba(232, 232, 232, 0.1);
+  backdrop-filter: blur(0.4rem);
+  -webkit-backdrop-filter: blur(0.4rem);
   border-radius: 10px;
   z-index: 100;
 
-  padding: 60px;
+  padding: 40px;
   display: flex;
   flex-direction: column;
 }
 
-.weather {
+.app-header {
   display: flex;
   justify-content: space-between;
+  padding-bottom: 0.5rem;
+  animation: anim 0.3s;
+}
+
+.city {
+  display: flex;
+  align-items: center;
+}
+
+.app-content {
+  margin-top: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 150px;
+  animation: anim 0.3s;
+}
+
+.app-footer {
+  animation: anim 0.3s;
+}
+
+.container-weather-status {
+  display: flex;
+}
+
+.weather-status {
+  margin: 40px;
+  font-size: 2rem;
+}
+
+.weather-status li {
+  align-items: center;
+  display: flex;
+}
+
+.weather-status img {
+  display: block;
+  width: 25px;
+  height: 25px;
+  margin: 0.5rem 0.8rem 0.5rem 0;
+  opacity: 0.7;
 }
 
 .weather-icon img {
@@ -45,33 +90,43 @@ body {
   display: block;
 }
 
-.weather-data p {
+[data-city] {
+  font-size: 2.8rem;
+  font-weight: 300;
+  margin-right: 10px;
+}
+
+[data-time] {
   font-size: 2rem;
 }
 
-.weather-data h1 {
-  font-size: 4rem;
-  font-weight: 300;
-}
-
-.weather-data span {
-  font-size: 8rem;
+[data-temp] {
+  font-size: 14rem;
   font-weight: 300;
 }
 
 .search {
   max-width: 100%;
-  margin-top: 150px;
   display: flex;
-  justify-content: center;
 }
 
 .search input {
   width: 100%;
   max-width: 350px;
-  padding: 10px;
+  padding: 1rem;
   outline: none;
   border: none;
+}
+
+@keyframes anim {
+  from {
+    opacity: 0;
+    transform: translate3d(-30px, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
 }
 
 .search button {
@@ -86,10 +141,6 @@ body {
 @media (max-width: 500px) {
   html {
     font-size: 50%;
-  }
-
-  .search {
-    flex-direction: column;
   }
 
   .container {
