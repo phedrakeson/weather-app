@@ -1,4 +1,4 @@
-# Slide
+# Weather App
 
 ![GitHub repo size](https://img.shields.io/github/repo-size/phedrakeson/weather-app?style=for-the-badge)
 ![GitHub language count](https://img.shields.io/github/languages/count/phedrakeson/weather-app?style=for-the-badge)
@@ -35,4 +35,4 @@ Como alternativa, consulte a documentação do GitHub em [como criar uma solicit
 
 Esse projeto está sob licença. Veja o arquivo [LICENÇA](LICENSE.md) para mais detalhes.
 
-[⬆ Voltar ao topo](#Slide)<br>
+[⬆ Voltar ao topo](#Weather App)<br>
