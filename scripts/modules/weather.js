@@ -50,7 +50,7 @@ export default class WeatherService {
     const encodedCity = encodeURI(city);
     const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${encodedCity}&appid=${api_key}`);
     const resJSON = await res.json();
-    let wind = (resJSON.wind.speed * 3.6).toFixed(2);
+    let wind = (resJSON.wind.speed * 3.6).toFixed(0);
     let country = resJSON.sys.country;
     let { temp, humidity, temp_min } = resJSON.main;
     let cityName = resJSON.name;
