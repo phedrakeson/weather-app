@@ -116,6 +116,8 @@ body {
   padding: 1rem;
   outline: none;
   border: none;
+  border-radius: 2rem 0 0 2rem;
+  opacity: 0.9;
 }
 
 @keyframes anim {
@@ -136,6 +138,7 @@ body {
   cursor: pointer;
   background: #2e3131;
   color: #eeeeee;
+  opacity: 0.9;
 }
 
 @media (max-width: 500px) {
