@@ -150,6 +150,22 @@ body {
   .container {
     padding: 20px;
   }
+
+  .app-content {
+    flex-direction: column;
+  }
+
+  [data-temp] {
+    flex: 1;
+  }
+
+  .weather-status {
+    flex: 1;
+  }
+
+  [data-time] {
+    font-size: 3rem;
+  }
 }
 
 @media (max-width: 350px) {
