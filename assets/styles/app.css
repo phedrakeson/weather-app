@@ -48,6 +48,7 @@ body {
 .city {
   display: flex;
   align-items: center;
+  margin-left: 20px;
 }
 
 .app-content {
@@ -147,12 +148,12 @@ body {
   }
 
   .container {
-    padding: 30px;
+    padding: 20px;
   }
 }
 
 @media (max-width: 350px) {
   html {
-    font-size: 40%;
+    font-size: 35%;
   }
 }
