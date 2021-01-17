@@ -17,7 +17,9 @@ O projeto ainda está em desenvolvimento e as próximas atualizações serão vo
 - [x] Principal funcionalidade, realizar busca e exibir dados do clima de uma cidade.
 - [ ] Implementar uma loading screen.
 - [ ] Implementar mudanças de estilo com base no horário (manhã, tarde e noite).
-- [ ] Melhorar o sistema de busca, implementando sugestões de cidades.
+- [ ] Solicitar localização para realizar busca.
+- [ ] Melhorar o sistema de busca.
+- [ ] Implementar sugestão de cidades.
 - [ ] Adicionar um mini player de música, requisitando outra API.
 - [ ] Refatoração total dos scripts, deixá-los mais limpos.
 
