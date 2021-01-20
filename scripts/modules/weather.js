@@ -10,19 +10,19 @@ export default class WeatherService {
     this.getTimeAndDate = this.getTimeAndDate.bind(this);
   }
 
+  init() {
+    this.form.addEventListener('submit', this.getSearch);
+    this.verifyFirstAcess();
+    this.getTimeAndDate();
+    setInterval(this.getTimeAndDate, 5000);
+  }
+
   verifyFirstAcess() {
     if (this.lastCity === null) {
       this.getWeatherData('Brasilia');
     } else {
       this.getWeatherData(this.lastCity);
     }
-  }
-
-  init() {
-    this.form.addEventListener('submit', this.getSearch);
-    this.verifyFirstAcess();
-    this.getTimeAndDate();
-    setInterval(this.getTimeAndDate, 5000);
   }
 
   getSearch(event) {
@@ -60,6 +60,8 @@ export default class WeatherService {
     this.encodedCity = encodeURI(city);
     const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${this.encodedCity}&appid=${api_key}`);
     const resJSON = await res.json();
+
+
     let wind = (resJSON.wind.speed * 3.6).toFixed(0);
     let country = resJSON.sys.country;
     let { temp, humidity, temp_min } = resJSON.main;
@@ -87,13 +89,11 @@ export default class WeatherService {
     document.querySelector('[data-min_temp] p').innerText = `${temp_min}°`;
   }
 
-  convertKelvinToCelsius(value) {
-    return Math.round(value - 273.15);
-  }
-
   saveLastSearch(city) {
     localStorage.setItem('city', city);
   }
 
- 
+  convertKelvinToCelsius(value) {
+    return Math.round(value - 273.15);
+  }
 }
