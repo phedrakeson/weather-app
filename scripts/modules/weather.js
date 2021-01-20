@@ -10,9 +10,17 @@ export default class WeatherService {
     this.getTimeAndDate = this.getTimeAndDate.bind(this);
   }
 
+  verifyFirstAcess() {
+    if (this.lastCity === null) {
+      this.getWeatherData('Brasilia');
+    } else {
+      this.getWeatherData(this.lastCity);
+    }
+  }
+
   init() {
     this.form.addEventListener('submit', this.getSearch);
-    this.getWeatherData(this.lastCity);
+    this.verifyFirstAcess();
     this.getTimeAndDate();
     setInterval(this.getTimeAndDate, 5000);
   }
