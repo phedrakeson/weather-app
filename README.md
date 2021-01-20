@@ -18,7 +18,7 @@ O projeto ainda está em desenvolvimento e as próximas atualizações serão vo
 - [x] Implementar uma loading screen.
 - [x] Implementar mudanças de estilo com base no horário (dia e noite).
 - [ ] Solicitar localização para realizar busca.
-- [ ] Implementar localStorage da ultima cidade buscada.
+- [x] Implementar localStorage da ultima cidade buscada.
 - [ ] Implementar sugestão de cidades.
 - [ ] Adicionar um mini player de música, requisitando outra API.
 - [ ] Refatoração total dos scripts, deixá-los mais limpos.
