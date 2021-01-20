@@ -7,22 +7,57 @@ export default class WeatherService {
     this.calendar = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
     this.setClock = this.setClock.bind(this);
     this.lastCity = localStorage.getItem('city');
+    this.lastLat = localStorage.getItem('lat');
+    this.lastLon = localStorage.getItem('lon');
     this.getTimeAndDate = this.getTimeAndDate.bind(this);
-  }
+    this.geoSuccess = this.geoSuccess.bind(this);
+    this.geoError = this.geoError.bind(this);
 
-  verifyFirstAcess() {
-    if (this.lastCity === null) {
-      this.getWeatherData('Brasilia');
-    } else {
-      this.getWeatherData(this.lastCity);
+    this.weatherData = {
+      climate: {
+        wind: '',
+        speed: '',
+        temp: '',
+        temp_min: '',
+        humidity: '',
+        iconCode: ''
+      },
+      location: {
+        city: '',
+        lat: '',
+        lon: '',
+        country: ''
+      }
     }
   }
 
   init() {
     this.form.addEventListener('submit', this.getSearch);
-    this.verifyFirstAcess();
+    this.verifyGeoPermission();
     this.getTimeAndDate();
     setInterval(this.getTimeAndDate, 5000);
+  }
+
+  verifyGeoPermission() {
+    navigator.geolocation.getCurrentPosition(this.geoSuccess, this.geoError);
+  }
+
+  geoSuccess(coord) {
+    let { latitude, longitude } = coord.coords;
+    this.getGeoWeatherData(latitude, longitude);
+  }
+
+  geoError(error) {
+    console.error(error);
+    this.verifyLastSearch();
+  }
+
+  verifyLastSearch() {
+    if (this.lastCity === null || '' || ' ') {
+      this.getWeatherData('Brasilia');
+    } else {
+      this.getWeatherData(this.lastCity);
+    }
   }
 
   getSearch(event) {
@@ -54,21 +89,54 @@ export default class WeatherService {
     }
   }
 
+  async getGeoWeatherData(lat, lon) {
+    const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${api_key}`);
+    const resJSON = await res.json();
+    let { temp, humidity, temp_min } = resJSON.main;
+    temp = this.convertKelvinToCelsius(temp);
+    temp_min = this.convertKelvinToCelsius(temp_min);
+    let { climate, location } = this.weatherData;
+    climate.wind = (resJSON.wind.speed * 3.6).toFixed(0);
+    climate.temp = temp;
+    climate.temp_min = temp_min;
+    climate.humidity = humidity;
+    climate.iconCode = resJSON.weather[0].icon;
+
+    location.city = resJSON.name;
+    location.country = resJSON.sys.country;
+
+    this.displayWeatherData();
+  }
+
 
   async getWeatherData(city) {
     this.saveLastSearch(city);
     this.encodedCity = encodeURI(city);
     const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${this.encodedCity}&appid=${api_key}`);
     const resJSON = await res.json();
-    let wind = (resJSON.wind.speed * 3.6).toFixed(0);
-    let country = resJSON.sys.country;
+
     let { temp, humidity, temp_min } = resJSON.main;
-    let cityName = resJSON.name;
-    let iconCode = resJSON.weather[0].icon;
-    let weatherIcon = `http://openweathermap.org/img/wn/${iconCode}@2x.png`
     temp = this.convertKelvinToCelsius(temp);
     temp_min = this.convertKelvinToCelsius(temp_min);
-    document.querySelector('[data-city]').innerText = cityName;
+    let { climate, location } = this.weatherData;
+    climate.wind = (resJSON.wind.speed * 3.6).toFixed(0);
+    climate.temp = temp;
+    climate.temp_min = temp_min;
+    climate.humidity = humidity;
+    climate.iconCode = resJSON.weather[0].icon;
+
+    location.city = resJSON.name;
+    location.country = resJSON.sys.country;
+
+    this.displayWeatherData();
+  }
+
+  async displayWeatherData() {
+    let { wind, temp, temp_min, humidity, iconCode } = this.weatherData.climate;
+    let { city, country } = this.weatherData.location;
+    let weatherIcon = `http://openweathermap.org/img/wn/${iconCode}@2x.png`
+
+    document.querySelector('[data-city]').innerText = city;
     document.querySelector('[data-state]').innerText = country;
 
     document.querySelector('[data-temp]').innerText = `${temp}°`;
@@ -77,16 +145,15 @@ export default class WeatherService {
     document.querySelector('[data-humidity] p').innerText = `${humidity}%`;
     document.querySelector('[data-wind] p').innerText = `${wind} km/h`;
     document.querySelector('[data-min_temp] p').innerText = `${temp_min}°`;
+  }
 
+  saveLastSearch(city, lat, lon) {
+    localStorage.setItem('city', city);
+    localStorage.setItem('lat', lat);
+    localStorage.setItem('lon', lon);
   }
 
   convertKelvinToCelsius(value) {
     return Math.round(value - 273.15);
   }
-
-  saveLastSearch(city) {
-    localStorage.setItem('city', city);
-  }
-
- 
 }
