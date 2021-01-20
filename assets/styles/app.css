@@ -66,6 +66,7 @@ body {
 
 .container-weather-status {
   display: flex;
+  align-items: center;
 }
 
 .weather-status {
