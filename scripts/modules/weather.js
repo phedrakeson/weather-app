@@ -12,6 +12,23 @@ export default class WeatherService {
     this.getTimeAndDate = this.getTimeAndDate.bind(this);
     this.geoSuccess = this.geoSuccess.bind(this);
     this.geoError = this.geoError.bind(this);
+
+    this.weatherData = {
+      climate: {
+        wind: '',
+        speed: '',
+        temp: '',
+        temp_min: '',
+        humidity: '',
+        iconCode: ''
+      },
+      location: {
+        city: '',
+        lat: '',
+        lon: '',
+        country: ''
+      }
+    }
   }
 
   init() {
@@ -75,19 +92,20 @@ export default class WeatherService {
   async getGeoWeatherData(lat, lon) {
     const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${api_key}`);
     const resJSON = await res.json();
-    
-    let wind = (resJSON.wind.speed * 3.6).toFixed(0);
-    let country = resJSON.sys.country;
     let { temp, humidity, temp_min } = resJSON.main;
-    let cityName = resJSON.name;
-    let iconCode = resJSON.weather[0].icon;
-    let weatherIcon = `http://openweathermap.org/img/wn/${iconCode}@2x.png`
     temp = this.convertKelvinToCelsius(temp);
     temp_min = this.convertKelvinToCelsius(temp_min);
+    let { climate, location } = this.weatherData;
+    climate.wind = (resJSON.wind.speed * 3.6).toFixed(0);
+    climate.temp = temp;
+    climate.temp_min = temp_min;
+    climate.humidity = humidity;
+    climate.iconCode = resJSON.weather[0].icon;
 
-    const weatherStatus = { wind, country, iconCode, weatherIcon}
-    const weatherData = { cityName, country, temp, weatherIcon, humidity, wind, temp_min };
-    this.displayWeatherData(weatherData);
+    location.city = resJSON.name;
+    location.country = resJSON.sys.country;
+
+    this.displayWeatherData();
   }
 
 
@@ -97,23 +115,28 @@ export default class WeatherService {
     const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${this.encodedCity}&appid=${api_key}`);
     const resJSON = await res.json();
 
-    let wind = (resJSON.wind.speed * 3.6).toFixed(0);
-    let country = resJSON.sys.country;
     let { temp, humidity, temp_min } = resJSON.main;
-    let cityName = resJSON.name;
-    let iconCode = resJSON.weather[0].icon;
-    let weatherIcon = `http://openweathermap.org/img/wn/${iconCode}@2x.png`
     temp = this.convertKelvinToCelsius(temp);
     temp_min = this.convertKelvinToCelsius(temp_min);
+    let { climate, location } = this.weatherData;
+    climate.wind = (resJSON.wind.speed * 3.6).toFixed(0);
+    climate.temp = temp;
+    climate.temp_min = temp_min;
+    climate.humidity = humidity;
+    climate.iconCode = resJSON.weather[0].icon;
 
-    const weatherStatus = { wind, country, iconCode, weatherIcon}
-    const weatherData = { cityName, country, temp, weatherIcon, humidity, wind, temp_min };
-    this.displayWeatherData(weatherData);
+    location.city = resJSON.name;
+    location.country = resJSON.sys.country;
+
+    this.displayWeatherData();
   }
 
-  async displayWeatherData(data) {
-    const { cityName, country, temp, weatherIcon, humidity, wind, temp_min } = data;
-    document.querySelector('[data-city]').innerText = cityName;
+  async displayWeatherData() {
+    let { wind, temp, temp_min, humidity, iconCode } = this.weatherData.climate;
+    let { city, country } = this.weatherData.location;
+    let weatherIcon = `http://openweathermap.org/img/wn/${iconCode}@2x.png`
+
+    document.querySelector('[data-city]').innerText = city;
     document.querySelector('[data-state]').innerText = country;
 
     document.querySelector('[data-temp]').innerText = `${temp}°`;
