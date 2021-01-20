@@ -68,6 +68,14 @@ export default class WeatherService {
     let weatherIcon = `http://openweathermap.org/img/wn/${iconCode}@2x.png`
     temp = this.convertKelvinToCelsius(temp);
     temp_min = this.convertKelvinToCelsius(temp_min);
+
+    const weatherData = { cityName, country, temp, weatherIcon, humidity, wind, temp_min };
+
+    this.displayWeatherData(weatherData)
+  }
+
+  async displayWeatherData(data) {
+    const { cityName, country, temp, weatherIcon, humidity, wind, temp_min } = data;
     document.querySelector('[data-city]').innerText = cityName;
     document.querySelector('[data-state]').innerText = country;
 
@@ -77,7 +85,6 @@ export default class WeatherService {
     document.querySelector('[data-humidity] p').innerText = `${humidity}%`;
     document.querySelector('[data-wind] p').innerText = `${wind} km/h`;
     document.querySelector('[data-min_temp] p').innerText = `${temp_min}°`;
-
   }
 
   convertKelvinToCelsius(value) {
