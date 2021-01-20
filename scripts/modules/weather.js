@@ -6,12 +6,13 @@ export default class WeatherService {
     this.getSearch = this.getSearch.bind(this);
     this.calendar = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
     this.setClock = this.setClock.bind(this);
+    this.lastCity = localStorage.getItem('city');
     this.getTimeAndDate = this.getTimeAndDate.bind(this);
   }
 
   init() {
     this.form.addEventListener('submit', this.getSearch);
-    this.getWeatherData('Brasília');
+    this.getWeatherData(this.lastCity);
     this.getTimeAndDate();
     setInterval(this.getTimeAndDate, 5000);
   }
@@ -47,8 +48,9 @@ export default class WeatherService {
 
 
   async getWeatherData(city) {
-    const encodedCity = encodeURI(city);
-    const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${encodedCity}&appid=${api_key}`);
+    this.saveLastSearch(city);
+    this.encodedCity = encodeURI(city);
+    const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${this.encodedCity}&appid=${api_key}`);
     const resJSON = await res.json();
     let wind = (resJSON.wind.speed * 3.6).toFixed(0);
     let country = resJSON.sys.country;
@@ -72,6 +74,10 @@ export default class WeatherService {
 
   convertKelvinToCelsius(value) {
     return Math.round(value - 273.15);
+  }
+
+  saveLastSearch(city) {
+    localStorage.setItem('city', city);
   }
 
  
