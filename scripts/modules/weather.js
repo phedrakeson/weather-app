@@ -39,6 +39,7 @@ export default class WeatherService {
   }
 
   verifyGeoPermission() {
+    this.verifyLastSearch();
     navigator.geolocation.getCurrentPosition(this.geoSuccess, this.geoError);
   }
 
@@ -48,8 +49,7 @@ export default class WeatherService {
   }
 
   geoError(error) {
-    console.error(error);
-    this.verifyLastSearch();
+    console.error(error.message);
   }
 
   verifyLastSearch() {
