@@ -17,11 +17,11 @@ O projeto ainda está em desenvolvimento e as próximas atualizações serão vo
 - [x] Principal funcionalidade, realizar busca e exibir dados do clima de uma cidade.
 - [x] Implementar uma loading screen.
 - [x] Implementar mudanças de estilo com base no horário (dia e noite).
-- [ ] Solicitar localização para realizar busca.
+- [x] Solicitar localização para realizar busca.
 - [x] Implementar localStorage da ultima cidade buscada.
 - [ ] Implementar sugestão de cidades.
 - [ ] Adicionar um mini player de música, requisitando outra API.
-- [ ] Refatoração total dos scripts, deixá-los mais limpos.
+- [x] Refatoração total dos scripts, deixá-los mais limpos.
 
 
 ## 📫 Contribuindo para o Weather App
