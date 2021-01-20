@@ -7,17 +7,35 @@ export default class WeatherService {
     this.calendar = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
     this.setClock = this.setClock.bind(this);
     this.lastCity = localStorage.getItem('city');
+    this.lastLat = localStorage.getItem('lat');
+    this.lastLon = localStorage.getItem('lon');
     this.getTimeAndDate = this.getTimeAndDate.bind(this);
+    this.geoSuccess = this.geoSuccess.bind(this);
+    this.geoError = this.geoError.bind(this);
   }
 
   init() {
     this.form.addEventListener('submit', this.getSearch);
-    this.verifyFirstAcess();
+    this.verifyGeoPermission();
     this.getTimeAndDate();
     setInterval(this.getTimeAndDate, 5000);
   }
 
-  verifyFirstAcess() {
+  verifyGeoPermission() {
+    navigator.geolocation.getCurrentPosition(this.geoSuccess, this.geoError);
+  }
+
+  geoSuccess(coord) {
+    let { latitude, longitude } = coord.coords;
+    this.getGeoWeatherData(latitude, longitude);
+  }
+
+  geoError(error) {
+    console.error(error);
+    this.verifyLastSearch();
+  }
+
+  verifyLastSearch() {
     if (this.lastCity === null || '' || ' ') {
       this.getWeatherData('Brasilia');
     } else {
@@ -54,13 +72,30 @@ export default class WeatherService {
     }
   }
 
+  async getGeoWeatherData(lat, lon) {
+    const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${api_key}`);
+    const resJSON = await res.json();
+    
+    let wind = (resJSON.wind.speed * 3.6).toFixed(0);
+    let country = resJSON.sys.country;
+    let { temp, humidity, temp_min } = resJSON.main;
+    let cityName = resJSON.name;
+    let iconCode = resJSON.weather[0].icon;
+    let weatherIcon = `http://openweathermap.org/img/wn/${iconCode}@2x.png`
+    temp = this.convertKelvinToCelsius(temp);
+    temp_min = this.convertKelvinToCelsius(temp_min);
+
+    const weatherStatus = { wind, country, iconCode, weatherIcon}
+    const weatherData = { cityName, country, temp, weatherIcon, humidity, wind, temp_min };
+    this.displayWeatherData(weatherData);
+  }
+
 
   async getWeatherData(city) {
     this.saveLastSearch(city);
     this.encodedCity = encodeURI(city);
     const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${this.encodedCity}&appid=${api_key}`);
     const resJSON = await res.json();
-
 
     let wind = (resJSON.wind.speed * 3.6).toFixed(0);
     let country = resJSON.sys.country;
@@ -71,9 +106,9 @@ export default class WeatherService {
     temp = this.convertKelvinToCelsius(temp);
     temp_min = this.convertKelvinToCelsius(temp_min);
 
+    const weatherStatus = { wind, country, iconCode, weatherIcon}
     const weatherData = { cityName, country, temp, weatherIcon, humidity, wind, temp_min };
-
-    this.displayWeatherData(weatherData)
+    this.displayWeatherData(weatherData);
   }
 
   async displayWeatherData(data) {
@@ -89,8 +124,10 @@ export default class WeatherService {
     document.querySelector('[data-min_temp] p').innerText = `${temp_min}°`;
   }
 
-  saveLastSearch(city) {
+  saveLastSearch(city, lat, lon) {
     localStorage.setItem('city', city);
+    localStorage.setItem('lat', lat);
+    localStorage.setItem('lon', lon);
   }
 
   convertKelvinToCelsius(value) {
