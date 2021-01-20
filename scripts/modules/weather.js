@@ -18,7 +18,7 @@ export default class WeatherService {
   }
 
   verifyFirstAcess() {
-    if (this.lastCity === null) {
+    if (this.lastCity === null || '' || ' ') {
       this.getWeatherData('Brasilia');
     } else {
       this.getWeatherData(this.lastCity);
