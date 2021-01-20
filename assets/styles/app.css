@@ -62,6 +62,9 @@ body {
 
 .app-footer {
   animation: anim 0.3s;
+  display: flex;
+  align-items: flex-end;
+  flex: 1;
 }
 
 .container-weather-status {
