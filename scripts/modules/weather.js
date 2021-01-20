@@ -53,7 +53,7 @@ export default class WeatherService {
   }
 
   verifyLastSearch() {
-    if (this.lastCity === null || '' || ' ') {
+    if (this.lastCity === null) {
       this.getWeatherData('Brasilia');
     } else {
       this.getWeatherData(this.lastCity);
@@ -147,10 +147,8 @@ export default class WeatherService {
     document.querySelector('[data-min_temp] p').innerText = `${temp_min}°`;
   }
 
-  saveLastSearch(city, lat, lon) {
+  saveLastSearch(city) {
     localStorage.setItem('city', city);
-    localStorage.setItem('lat', lat);
-    localStorage.setItem('lon', lon);
   }
 
   convertKelvinToCelsius(value) {
