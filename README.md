@@ -19,7 +19,6 @@ O projeto ainda está em desenvolvimento e as próximas atualizações serão vo
 - [x] Implementar mudanças de estilo com base no horário (dia e noite).
 - [x] Solicitar localização para realizar busca.
 - [x] Implementar localStorage da ultima cidade buscada.
-- [ ] Implementar sugestão de cidades.
 - [ ] Adicionar um mini player de música, requisitando outra API.
 - [x] Refatoração total dos scripts, deixá-los mais limpos.
 
